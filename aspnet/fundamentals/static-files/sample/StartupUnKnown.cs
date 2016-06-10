@@ -62,7 +62,7 @@ namespace noAuth
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/Images")
+                RequestPath = new PathString("/MyImages")
             });
 
             app.UseMvc(routes =>

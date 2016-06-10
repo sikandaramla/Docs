@@ -1,5 +1,5 @@
-﻿#define Second
-#if Second
+﻿//#define StartupDefault
+#if StartupDefault
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

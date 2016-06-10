@@ -1,4 +1,4 @@
-﻿#define FileExtensionContentTypeProvider
+﻿//#define FileExtensionContentTypeProvider
 #if FileExtensionContentTypeProvider
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +66,7 @@ namespace noAuth
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/Images")
+                RequestPath = new PathString("/MyImages")
             });
 
             app.UseMvc(routes =>
@@ -75,6 +75,7 @@ namespace noAuth
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

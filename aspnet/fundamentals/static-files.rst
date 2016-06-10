@@ -6,6 +6,8 @@ By `Rick Anderson`_
 
 Static files, such as HTML, CSS, image, and JavaScript, are assets that an ASP.NET Core app can serve directly to clients.
 
+`View or download sample code <https://github.com/aspnet/Docs/tree/master/aspnet/fundamentals/static-files/sample>`__
+
 .. contents:: Sections
   :local:
   :depth: 1
@@ -13,7 +15,7 @@ Static files, such as HTML, CSS, image, and JavaScript, are assets that an ASP.N
 Serving static files
 --------------------
 
-Static files are typically located in the web root (*<content-root>/wwwroot*) folder. See Content root and Web root in  :doc:`/conceptual-overview/aspnet` for more information. You generally set the content root to be the current directory so that your project's webroot will be found while in development.
+Static files are typically located in the ``web root`` (*<content-root>/wwwroot*) folder. See Content root and Web root in  :doc:`/conceptual-overview/aspnet` for more information. You generally set the content root to be the current directory so that your project's ``web root`` will be found while in development.
 
 .. literalinclude:: ../../common/samples/WebApplication1/src/WebApplication1/Program.cs
   :language: c#
@@ -22,7 +24,7 @@ Static files are typically located in the web root (*<content-root>/wwwroot*) fo
   :dedent: 8
 
 
-Static files can be stored in any folder under the *wwwroot* and accessed with a relative path to that root. For example, when you create a default Web application project using Visual Studio, there are several folders created within the *wwwroot*  folder - *css*, *images*, and *js*. The URI to access an image in the *images* subfolder:
+Static files can be stored in any folder under the ``web root`` and accessed with a relative path to that root. For example, when you create a default Web application project using Visual Studio, there are several folders created within the *wwwroot*  folder - *css*, *images*, and *js*. The URI to access an image in the *images* subfolder:
 
 - \http://<app>/images/<imageFileName>
 - \http://localhost:9189/images/banner3.svg
@@ -38,7 +40,9 @@ In order for static files to be served, you must configure the :doc:`middleware`
 
 You must include "Microsoft.AspNetCore.StaticFiles" in the *project.json* file.
 
-Suppose you have a project hierarchy where the static files you wish to serve are outside the webroot. For example:
+.. note:: ``web root`` defaults to the *wwwroot* directory, but you can set the ``web root`` directory with :dn:method:`~Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.UseWebRoot`. See :doc:`/conceptual-overview/aspnet` for more information.
+
+Suppose you have a project hierarchy where the static files you wish to serve are outside the ``web root``. For example:
 
   - wwwroot
 
@@ -58,20 +62,20 @@ For a request to access *test.png*, configure the static files middleware as fol
   :emphasize-lines: 7-12
   :dedent: 8
 
-A request to ``http://<yourApp>/StaticFiles/test.png`` will serve the *test.png* file.
+A request to ``http://<app>/StaticFiles/test.png`` will serve the *test.png* file.
 
 Static file authorization
 -------------------------
 
-The static file module provides **no** authorization checks. Any files served by it, including those under *wwwroot* are publicly available. If you want to serve files based on authorization you should:
+The static file module provides **no** authorization checks. Any files served by it, including those under *wwwroot* are publicly available. To serve files based on authorization:
 
-- Store them outside of *wwwroot* and any directory accessible to the static file middleware
+- Store them outside of *wwwroot* and any directory accessible to the static file middleware **and**
 - Serve them through a controller action, returning a :dn:class:`~Microsoft.AspNetCore.Mvc.FileResult` where authorization is applied
 
 Enabling directory browsing
 ---------------------------
 
-Directory browsing allows the user of your web app to see a list of directories and files within a specified directory. Directory browsing is disabled by default for security reasons. To enable directory browsing, call the ``UseDirectoryBrowser`` extension method from  ``Startup.Configure`` as follows:
+Directory browsing allows the user of your web app to see a list of directories and files within a specified directory. Directory browsing is disabled by default for security reasons. To enable directory browsing, call the :dn:method:`~Microsoft.AspNetCore.Builder.DirectoryBrowserExtensions.UseDirectoryBrowser` extension method from  ``Startup.Configure``:
 
 .. literalinclude:: static-files/sample/Startup.cs
   :language: c#
@@ -105,7 +109,7 @@ With :dn:method:`~Microsoft.AspNetCore.Builder.DefaultFilesExtensions.UseDefault
   - index.htm
   - index.html
 
-The first file found from the list will be servered as if the request was the fully qualified URI (although the browser URL will continue to show the URI requested).
+The first file found from the list will be severed as if the request was the fully qualified URI (although the browser URL will continue to show the URI requested).
 
 The following code shows how to change the default file name to *mydefault.html*.
 
@@ -131,7 +135,7 @@ The following code enables static files, default files and  directory browsing:
 
   app.UseFileServer(enableDirectoryBrowsing: true);
 
-As with ``UseStaticFiles``, ``UseDefaultFiles``, and ``UseDirectoryBrowser``, if you wish to serve files that exist outside the webroot, you instantiate and configure an :dn:class:`~Microsoft.AspNetCore.Builder.FileServerOptions` object that you pass as a parameter to ``UseFileServer``. For example, given the following directory hierarchy in your Web app:
+As with ``UseStaticFiles``, ``UseDefaultFiles``, and ``UseDirectoryBrowser``, if you wish to serve files that exist outside the ``web root``, you instantiate and configure an :dn:class:`~Microsoft.AspNetCore.Builder.FileServerOptions` object that you pass as a parameter to ``UseFileServer``. For example, given the following directory hierarchy in your Web app:
 
 - wwwroot
 
@@ -169,7 +173,7 @@ Non-standard content types
 
 The ASP.NET static file middleware understands almost 400 known file content types. If the user requests a file of an unknown file type, the static file middleware returns a HTTP 404 (Not found) response. If directory browsing is enabled, a link to the file will be displayed, but the URI will return an HTTP 404 error.
 
-The following code enables serving unknown types and will render the unknown file as an image. See  this `list of common MIME content types <http://www.iana.org/assignments/media-types/media-types.xhtml>`__.
+The following code enables serving unknown types and will render the unknown file as an image. See   `MIME content types <http://www.iana.org/assignments/media-types/media-types.xhtml>`__.
 
 .. literalinclude:: static-files/sample/StartupUnKnown.cs
   :language: c#
@@ -190,16 +194,23 @@ The :dn:class:`~Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvide
   :lines: 58-70
   :dedent: 12
 
-
 Considerations
 ^^^^^^^^^^^^^^^^
 
 - ASP.NET Core applications hosted in IIS use the ASP.NET Core Module to forward all requests to the application including requests for static files. The IIS static file handler is not used because it doesn't get a chance to handle requests before they are handled by the ASP.NET Core Module.
+- To remove the IIS static file handler (at the server or website level):
 
-- Code files (including c# and Razor) should be placed outside of the app project's webroot (*wwwroot* directory). This creates a clean separation between your app's static (non-compliable) content and source code and protects source code from being leaked.
+    - Navigate to the **Modules** feature
+    - Select **StaticFileModule** in the list
+    - Tap **Remove** in the **Actions** sidebar
+    
+.. warning:: If the IIS static file handler is enabled **and** the ASP.NET Core Module (ANCM) is not correctly configured (for example if *web.config* was not deployed), static files will be served.
+
+- Code files (including c# and Razor) should be placed outside of the app project's ``web root`` (*wwwroot* by default). This creates a clean separation between your app's static (non-compliable) content and source code and protects source code from being leaked.
 
 
 Additional Resources
 --------------------
 
 - :doc:`middleware`
+- :doc:`/conceptual-overview/aspnet` 

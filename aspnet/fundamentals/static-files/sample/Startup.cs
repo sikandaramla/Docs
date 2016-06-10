@@ -1,4 +1,4 @@
-﻿//#define Startup
+﻿#define Startup
 #if Startup
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,7 +65,7 @@ namespace noAuth
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/Images")
+                RequestPath = new PathString("/MyImages")
             });
 
             app.UseMvc(routes =>

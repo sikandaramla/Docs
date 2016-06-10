@@ -1,5 +1,5 @@
-﻿//#define First
-#if First
+﻿//#define StartupEmpty
+#if StartupEmpty
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
