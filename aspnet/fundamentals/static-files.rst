@@ -162,7 +162,7 @@ URI                                         Response
 
 If no default named files are in the *MyStaticFiles* directory, \http://<app>/StaticFiles returns the directory listing with clickable links:
 
-.. image:: static-files/_static/db2.png
+.. image:: static-files/_static/db2.PNG
 
 Non-standard content types
 --------------------------
