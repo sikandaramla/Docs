@@ -171,7 +171,7 @@ The ASP.NET static file middleware understands almost 400 known file content typ
 
 The following code enables serving unknown types and will render the unknown file as an image. See  this `list of common MIME content types <http://www.iana.org/assignments/media-types/media-types.xhtml>`__.
 
-.. literalinclude:: static-files/sample/StartupUnknown.cs
+.. literalinclude:: static-files/sample/StartupUnKnown.cs
   :language: c#
   :lines: 55-66
   :dedent: 12
