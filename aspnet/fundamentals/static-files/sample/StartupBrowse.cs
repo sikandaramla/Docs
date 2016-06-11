@@ -1,5 +1,5 @@
-﻿//#define Startup
-#if Startup
+﻿//#define StartupBrowse
+#if StartupBrowse
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -49,16 +49,15 @@ namespace noAuth
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-           // app.UseDefaultFiles();
             // Code removed for brevity.
 
-            app.UseStaticFiles();
+            app.UseStaticFiles();                          // For the wwwroot folder
 
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), @"MyStaticFiles")),
-                RequestPath = new PathString("/StaticFiles")
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
+                RequestPath = new PathString("/MyImages")
             });
 
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()

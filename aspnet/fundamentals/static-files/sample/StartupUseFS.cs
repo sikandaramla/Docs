@@ -50,7 +50,7 @@ namespace noAuth
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            // Code removed for brevity.
+            app.UseStaticFiles();
 
             app.UseFileServer(new FileServerOptions()
             {

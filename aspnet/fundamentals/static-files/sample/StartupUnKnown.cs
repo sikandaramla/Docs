@@ -1,4 +1,4 @@
-﻿//#define ServeUnknownFileTypes
+﻿#define ServeUnknownFileTypes
 #if ServeUnknownFileTypes
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,20 +49,13 @@ namespace noAuth
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseDefaultFiles();
-            // Code removed for brevity.
+
+            // http://localhost:1234/images/test.image
 
             app.UseStaticFiles(new StaticFileOptions
             {
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "image/png"
-            });
-
-            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/MyImages")
             });
 
             app.UseMvc(routes =>

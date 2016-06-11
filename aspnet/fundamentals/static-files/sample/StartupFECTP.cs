@@ -50,17 +50,28 @@ namespace noAuth
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseDefaultFiles();
+            // app.UseDefaultFiles();
 
             // Code removed for brevity.
 
             // Set up custom content types -associating file extension to MIME type
             var provider = new FileExtensionContentTypeProvider();
-            provider.Mappings.Add(".myapp", "application/x-msdownload");
-            provider.Mappings.Add(".htm3", "text/html");
-            provider.Mappings.Add(".image", "image/png");
+            // Add new mappings
+            provider.Mappings[".myapp"] = "application/x-msdownload";
+            provider.Mappings[".htm3"] = "text/html";
+            provider.Mappings[".image"] = "image/png";
+            // Replace an existing mapping
+            provider.Mappings[".rtf"] = "application/x-msdownload";
+            // Remove MP4 videos.
+            provider.Mappings.Remove(".mp4");
 
-            app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = provider });
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
+                RequestPath = new PathString("/MyImages"),
+                ContentTypeProvider = provider
+            });
 
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
