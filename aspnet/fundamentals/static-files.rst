@@ -173,7 +173,7 @@ URI                                         Response
 
 If no default named files are in the *MyStaticFiles* directory, \http://<app>/StaticFiles returns the directory listing with clickable links:
 
-.. image:: static-files/_static/db2.PNG  zz
+.. image:: static-files/_static/db2.PNG
 
 .. note:: ``UseDefaultFiles`` and ``UseDirectoryBrowser`` will take the url \http://<app>/StaticFiles without the trailing slash and cause a client side redirect to \http://<app>/StaticFiles/ (adding the trailing slash). Without the trailing slash relative URLs within the documents would be incorrect.
 
